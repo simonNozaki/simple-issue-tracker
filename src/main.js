@@ -1,6 +1,5 @@
 import { fetchIssues } from "./issue-operation";
 import {
-  EVENT_CONST,
   LOCALSTORAGE_CONST,
   ISSUE_STATUS_CONST,
 } from "./constants";
@@ -8,19 +7,15 @@ import {
 /**
  * 画面ロード時に課題を取得するイベントリスナ
  */
-window.addEventListener(EVENT_CONST.load, fetchIssues);
+window.addEventListener("load", fetchIssues);
 
 /**
  * 入力フォームのイベントリスナ
  */
 document
   .getElementById("issueInputForm")
-  .addEventListener(EVENT_CONST.submit, saveIssue);
+  .addEventListener("submit", saveIssue);
 
-/**
- * 新規の課題を登録します。
- * @param {*} e
- */
 function saveIssue(e) {
   const title = document.getElementById("issueTitleInput").value;
   const issueDescription = document.getElementById("issueDescInput").value;

@@ -1,5 +1,4 @@
 import {
-  EVENT_CONST,
   LOCALSTORAGE_CONST,
   ISSUE_STATUS_CONST,
 } from "./constants";
@@ -98,13 +97,13 @@ export function fetchIssues() {
                 `;
       document
         .getElementById("anchorStatusProcessed")
-        .addEventListener(EVENT_CONST.click, setStatusProcessed(id));
+        .addEventListener("click", setStatusProcessed(id));
       document
         .getElementById("anchorStatusClosed")
-        .addEventListener(EVENT_CONST.click, setStatusClosed(id));
+        .addEventListener("click", setStatusClosed(id));
       document
         .getElementById("anchorDeleteIssue")
-        .addEventListener(EVENT_CONST.click, deleteIssue(id));
+        .addEventListener("click", deleteIssue(id));
     }
   }
 }

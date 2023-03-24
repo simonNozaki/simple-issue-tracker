@@ -13,12 +13,3 @@ export const ISSUE_STATUS_CONST = {
   processed: "Processed",
   closed: "Closed",
 };
-
-/**
- * イベント定数
- */
-export const EVENT_CONST = {
-  submit: "submit",
-  load: "load",
-  click: "click",
-};
