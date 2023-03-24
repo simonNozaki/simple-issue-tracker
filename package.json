@@ -1,15 +1,13 @@
 {
   "name": "simple-issue-tracker",
   "version": "1.0.0",
-  "description": "Original...   - youtube https://www.youtube.com/watch?v=NYq9J-Eur9U - github https://github.com/seeschweiler/jsissuetracker",
   "main": "main.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "./node_modules/.bin/webpack",
-    "serve": "./node_modules/.bin/live-server"
+    "serve": "npx webpack serve"
   },
   "repository": {
     "type": "git",
@@ -22,9 +20,9 @@
   },
   "homepage": "https://github.com/simonNozaki/simple-issue-tracker#readme",
   "dependencies": {
-    "live-server": "^1.2.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "live-server": "^1.2.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.13.1"
   }
 }
