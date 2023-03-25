@@ -1,39 +1,29 @@
-import { fetchIssues } from "./issue-operation";
+import { fetchAndRenderIssues } from "./issue-operation";
 import { save } from "./issue-store";
 
 /**
  * 画面ロード時に課題を取得するイベントリスナ
  */
-window.addEventListener("load", fetchIssues);
+window.addEventListener("load", fetchAndRenderIssues);
 
 /**
  * 入力フォームのイベントリスナ
  */
-document
-  .getElementById("issueInputForm")
-  .addEventListener("submit", saveIssue);
+document.getElementById("issueInputForm").addEventListener("submit", saveIssue);
 
 function saveIssue(e) {
-  const title = document.getElementById("issueTitleInput").value;
-  const issueDescription = document.getElementById("issueDescInput").value;
-  const issueSeverity = document.getElementById("issueSeverityInput").value;
-  const issueAssignedTo = document.getElementById("issueAssignedToInput").value;
-  
   const issue = {
     // eslint-disable-next-line no-undef
     id: chance.guid(),
-    title: title,
-    description: issueDescription,
-    severity: issueSeverity,
-    assignedTo: issueAssignedTo,
+    title: document.getElementById("issueTitleInput").value,
+    description: document.getElementById("issueDescInput").value,
+    severity: document.getElementById("issueSeverityInput").value,
+    assignedTo: document.getElementById("issueAssignedToInput").value,
     status: "open",
   };
 
-  save(issue)
-
+  save(issue);
   document.getElementById("issueInputForm").reset();
-
-  fetchIssues();
-
+  fetchAndRenderIssues();
   e.preventDefault();
 }

@@ -1,6 +1,6 @@
 export const findAll = () => {
   const maybeIssues = JSON.parse(localStorage.getItem("issues"));
-  return maybeIssues ? maybeIssues : []
+  return maybeIssues ? maybeIssues : [];
 };
 
 export const saveAll = (issues) => {
@@ -8,7 +8,7 @@ export const saveAll = (issues) => {
 };
 
 export const save = (issue) => {
-  const issues = findAll()
-  issues.push(issue)
-  saveAll(issues)
-}
+  const issues = findAll();
+  issues.push(issue);
+  saveAll(issues);
+};

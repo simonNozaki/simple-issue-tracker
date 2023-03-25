@@ -1,17 +1,17 @@
 import { findAll, saveAll } from "./issue-store";
 
 function setStatusProcessed(id) {
-  setStatus(id, "in progress")
-  fetchIssues();
+  setStatus(id, "in progress");
+  fetchAndRenderIssues();
 }
 
 export function setStatusClosed(id) {
-  setStatus(id, "closed")
-  fetchIssues();
+  setStatus(id, "closed");
+  fetchAndRenderIssues();
 }
 
 export const setStatus = (id, status) => {
-  const issues = findAll()
+  const issues = findAll();
 
   for (let i = 0; i < issues.length; i++) {
     if (issues[i].id == id) {
@@ -19,12 +19,12 @@ export const setStatus = (id, status) => {
     }
   }
 
-  saveAll(issues)
+  saveAll(issues);
 };
 
 function deleteIssue(id) {
   if (window.confirm("Confirm deleting the issue")) {
-    const issues = findAll()
+    const issues = findAll();
 
     for (let i = 0; i < issues.length; i++) {
       if (issues[i].id == id) {
@@ -32,36 +32,33 @@ function deleteIssue(id) {
       }
     }
 
-    setStatus(id, issues)
-    fetchIssues();
+    setStatus(id, issues);
+    fetchAndRenderIssues();
   }
 }
 
-/**
- * 課題をすべて取得します。
- */
-export function fetchIssues() {
-  const issues = findAll()
+export function fetchAndRenderIssues() {
+  const issues = findAll();
   const issuesList = document.getElementById("issuesList");
+
+  if (!issuesList) {
+    window.alert('document.getElementById("issuesList") is null');
+    return;
+  }
 
   issuesList.innerHTML = "";
 
   for (let i = 0; i < issues.length; i++) {
     const id = issues[i].id;
-    const title = issues[i].title;
-    const description = issues[i].description;
-    const severity = issues[i].severity;
-    const assignedTo = issues[i].assignedTo;
-    const status = issues[i].status;
 
     issuesList.innerHTML += `
               <div class="well">
                   <h6>Issue ID: ${id} </h6>
-                  <p><span class="label label-info">${status}</span></p>
-                  <h3>${title}</h3>
-                  <p><span class="glyphicon glyphicon-time"></span>${severity}</p>
-                  <p><span class="glyphicon glyphicon-user"></span>${assignedTo}</p>
-                  <p><span class="glyphicon glyphicon-file"></span>${description}</p>
+                  <p><span class="label label-info">${issues[i].status}</span></p>
+                  <h3>${issues[i].title}</h3>
+                  <p><span class="glyphicon glyphicon-time"></span>${issues[i].severity}</p>
+                  <p><span class="glyphicon glyphicon-user"></span>${issues[i].assignedTo}</p>
+                  <p><span class="glyphicon glyphicon-file"></span>${issues[i].description}</p>
                   <a href="#" id="anchorStatusProcessed" class="btn btn-primary">Processed</a>
                   <a href="#" id="anchorStatusClosed" class="btn btn-success">Close</a>
                   <a href="#" id="anchorDeleteIssue" class="btn btn-danger">Delete</a>
