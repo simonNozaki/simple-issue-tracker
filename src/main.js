@@ -1,8 +1,5 @@
 import { fetchIssues } from "./issue-operation";
-import {
-  LOCALSTORAGE_CONST,
-  ISSUE_STATUS_CONST,
-} from "./constants";
+import { save } from "./issue-store";
 
 /**
  * 画面ロード時に課題を取得するイベントリスナ
@@ -21,31 +18,18 @@ function saveIssue(e) {
   const issueDescription = document.getElementById("issueDescInput").value;
   const issueSeverity = document.getElementById("issueSeverityInput").value;
   const issueAssignedTo = document.getElementById("issueAssignedToInput").value;
-  // eslint-disable-next-line no-undef
-  const issueId = chance.guid();
-  const issueStatus = ISSUE_STATUS_CONST.open;
-
+  
   const issue = {
-    id: issueId,
+    // eslint-disable-next-line no-undef
+    id: chance.guid(),
     title: title,
     description: issueDescription,
     severity: issueSeverity,
     assignedTo: issueAssignedTo,
-    status: issueStatus,
+    status: "open",
   };
 
-  if (localStorage.getItem(LOCALSTORAGE_CONST.key_issues) == null) {
-    localStorage.setItem(
-      LOCALSTORAGE_CONST.key_issues,
-      JSON.stringify([issue])
-    );
-  } else {
-    const issues = JSON.parse(
-      localStorage.getItem(LOCALSTORAGE_CONST.key_issues)
-    );
-    issues.push(issue);
-    localStorage.setItem(LOCALSTORAGE_CONST.key_issues, JSON.stringify(issues));
-  }
+  save(issue)
 
   document.getElementById("issueInputForm").reset();
 
