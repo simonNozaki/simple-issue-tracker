@@ -1,16 +1,14 @@
 import { findAll, saveAll } from "./issue-store";
 
-function setStatusProcessed(id) {
+export function setStatusProcessed(id) {
   setStatus(id, "in progress");
-  fetchAndRenderIssues();
 }
 
 export function setStatusClosed(id) {
   setStatus(id, "closed");
-  fetchAndRenderIssues();
 }
 
-export const setStatus = (id, status) => {
+const setStatus = (id, status) => {
   const issues = findAll();
 
   for (let i = 0; i < issues.length; i++) {
@@ -22,7 +20,7 @@ export const setStatus = (id, status) => {
   saveAll(issues);
 };
 
-function deleteIssue(id) {
+export function deleteIssue(id) {
   if (window.confirm("Confirm deleting the issue")) {
     const issues = findAll();
 
@@ -33,11 +31,10 @@ function deleteIssue(id) {
     }
 
     setStatus(id, issues);
-    fetchAndRenderIssues();
   }
 }
 
-export function fetchAndRenderIssues() {
+export function renderAllIssues() {
   const issues = findAll();
   const issuesList = document.getElementById("issuesList");
 
@@ -59,19 +56,19 @@ export function fetchAndRenderIssues() {
                   <p><span class="glyphicon glyphicon-time"></span>${issues[i].severity}</p>
                   <p><span class="glyphicon glyphicon-user"></span>${issues[i].assignedTo}</p>
                   <p><span class="glyphicon glyphicon-file"></span>${issues[i].description}</p>
-                  <a href="#" id="anchorStatusProcessed" class="btn btn-primary">Processed</a>
-                  <a href="#" id="anchorStatusClosed" class="btn btn-success">Close</a>
-                  <a href="#" id="anchorDeleteIssue" class="btn btn-danger">Delete</a>
+                  <button id="status-in-progress-${i}" class="btn btn-primary">Processed</button>
+                  <button id="status-closed-${i}" class="btn btn-success">Close</button>
+                  <button id="delete-issue-${i}" class="btn btn-danger">Delete</button>
               </div>
               `;
     document
-      .getElementById("anchorStatusProcessed")
+      .getElementById("status-in-progress-" + i)
       .addEventListener("click", setStatusProcessed(id));
     document
-      .getElementById("anchorStatusClosed")
+      .getElementById("status-closed-" + i)
       .addEventListener("click", setStatusClosed(id));
     document
-      .getElementById("anchorDeleteIssue")
+      .getElementById("delete-issue-" + i)
       .addEventListener("click", deleteIssue(id));
   }
 }
