@@ -1,12 +1,34 @@
+/* eslint-disable no-undef */
 const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: "production",
-  entry: "./src/main.js",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        // Sassファイルの読み込みとコンパイル
+        use: [
+          // スタイルシートをJSからlinkタグに展開する機能
+          "style-loader",
+          // CSSをバンドルするための機能
+          "css-loader"
+        ],
+      },
+    ],
+  },
+  devtool: "source-map",
+  optimization: {
+    minimize: true,
+  },
+  entry: {
+    index: "./src/main.js",
+  },
   output: {
-    filename: "bundle.js",
-    path: path.join(__dirname, "public")
+    filename: "js/[name].js",
+    path: path.resolve(process.cwd(), "./public"),
   },
   devServer: {
     static: {
@@ -14,8 +36,14 @@ module.exports = {
     },
     compress: true,
     port: 9000,
+    hot: true,
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'index.html' })
+    new HtmlWebpackPlugin({ template: 'index.html' }),
+    // Extracts CSS into separate files
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+      chunkFilename: "[id].css"
+    }),
   ]
 }

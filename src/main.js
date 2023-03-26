@@ -1,10 +1,14 @@
-import { fetchAndRenderIssues } from "./issue-operation";
+// bootstrap
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
+
+import { renderAllIssues } from "./issue-operation";
 import { save } from "./issue-store";
 
 /**
  * 画面ロード時に課題を取得するイベントリスナ
  */
-window.addEventListener("load", fetchAndRenderIssues);
+window.addEventListener("load", renderAllIssues);
 
 /**
  * 入力フォームのイベントリスナ
@@ -24,6 +28,6 @@ function saveIssue(e) {
 
   save(issue);
   document.getElementById("issueInputForm").reset();
-  fetchAndRenderIssues();
+  renderAllIssues();
   e.preventDefault();
 }
